@@ -223,9 +223,14 @@ def handle_favourite_planets():
 def handle_favourite_planets_byuser(user_id, planet_id):
     if request.method == 'POST':
         response_body = {}
-        ## if not user_id or planet_id:
-        ##     response_body['message'] = 'Planeta o usuario no encontrado'
-        ##     return response_body, 400
+        user = db.session.get(Users, user_id)
+        planet = db.session.get(Planets, planet_id)
+        if not user:
+            response_body['message'] = 'Usuario no encontrado'
+            return response_body, 400
+        if not planet:
+            response_body['message'] = 'Planeta no encontrado'
+            return response_body, 400
         favourite_planet = FavouritePlanets(user_id = user_id,
                                             planet_id = planet_id)
         db.session.add(favourite_planet)
@@ -259,9 +264,14 @@ def handle_favourite_characters():
 def handle_favourite_character_byuser(user_id, character_id):
     if request.method == 'POST':
         response_body = {}
-        ## if not user_id or character_id:
-        ##         response_body['message'] = 'Personaje o usuario no encontrado'
-        ##         return response_body, 400
+        user = db.session.get(Users, user_id)
+        character = db.session.get(Characters, character_id)
+        if not user:
+            response_body['message'] = 'Usuario no encontrado'
+            return response_body, 400
+        if not character:
+            response_body['message'] = 'Personaje no encontrado'
+            return response_body, 400
         favourite_character = FavouriteCharacters(user_id = user_id,
                                                   character_id = character_id)
         db.session.add(favourite_character)
